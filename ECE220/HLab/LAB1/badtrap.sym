@@ -1,0 +1,16 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	FILL_LOOP         3009
+//	COMPROMISED       3010
+//	PUTS_LINE1        3014
+//	CHANGE_LINE1      3015
+//	PUTS_LINE2        3016
+//	CHANGE_LINE2      3017
+//	BAD_MESSAGE_ADDR  3018
+//	BAD_MESSAGE       3019
+//	BEGIN             302A
+//	ASCII_NL          302F
+//	TEST_STRING       3030
+

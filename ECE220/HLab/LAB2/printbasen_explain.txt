@@ -1,0 +1,10 @@
+The printbasen is a easier way to print number in a specific base. Since it adopt the concept of STACK, it can do the calculation, store digits to be print in the stack, and then print it out. For the algorithm in MP1, it simply print number out while bit shifting.
+
+But there're some limitations in the printbasen.
+1. We need a large enough stack to print some number. If we want to print x7FFF in base 2, the stack size need to be at least 16.
+2. It can only print in base 2 - 36 (0-9 + A-Z, 36 symbols in total)
+3. It won't add 0s in front of the string.
+4. It can only print positive numbers.
+
+It's pretty hard to alter the algorithm used in MP1 to print numbers in other base, since it print digits via bit shifting, make it impossible to do more calculation before print it out.
+

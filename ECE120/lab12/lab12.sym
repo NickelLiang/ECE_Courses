@@ -1,0 +1,9 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	OUTERLOOP         3007
+//	INNERLOOP         3008
+//	INPUT             3011
+//	MINU1             3013
+

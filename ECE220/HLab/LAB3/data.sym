@@ -1,0 +1,19 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	BOARD             6000
+//	ASCII_ZERO        602A
+//	NEWLINE           602B
+//	EMPTY_PIECE       602C
+//	P1_PIECE          602D
+//	P2_PIECE          602E
+//	START_PROMPT      602F
+//	P1_PROMPT         605A
+//	P2_PROMPT         6072
+//	INVALID_INPUT     608A
+//	INVALID_MOVE      609A
+//	STALEMATE         60A9
+//	P1_WIN            60B5
+//	P2_WIN            60C5
+

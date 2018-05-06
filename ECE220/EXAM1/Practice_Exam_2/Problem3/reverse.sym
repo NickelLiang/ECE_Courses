@@ -1,0 +1,19 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	REVERSE           3002
+//	REVERSE_LOOP      300C
+//	REVERSE_DONE      3018
+//	REVERSE_R0        301F
+//	REVERSE_R1        3020
+//	REVERSE_R2        3021
+//	REVERSE_R3        3022
+//	REVERSE_R4        3023
+//	REVERSE_R5        3024
+//	SWAPMEM           3025
+//	SWAPMEM_R2        302E
+//	SWAPMEM_R3        302F
+//	NUM_ADDR          3030
+//	CHAR_ADDR         3031
+

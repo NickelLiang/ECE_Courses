@@ -1,0 +1,9 @@
+QUESTION 1.  Read through the program lab10.bin. What do you expect the program to do? More specifically, which register will the program modify when it is run, and what will it contain when the program finishes? (You can probably figure this out merely by reading the comments provided in lab10.bin.)
+
+ANSWER: 
+R2 will be modified. First we cleared the R2, then we add 12 to R2, so R2 will contain decimal value 12 when finished.
+
+QUESTION 2.  Explain in a few sentences why the ability to step through a program (run one instruction at a time) is a very useful tool for debugging a program. Debugging is the process of finding and correcting bugs (or errors) in a program. Hint: Finding a bug is often much more difficult than correcting it.
+
+ANSWER: 
+We can noticy the bug immediately when we execute the program line by line, hence, we can easity correct the bug.

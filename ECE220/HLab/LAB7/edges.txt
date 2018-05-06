@@ -1,0 +1,13 @@
+Peoria Mason 4
+Peoria Logan 5
+Peoria Woodford 7.5
+Mason Christian 14.43
+Woodford Grundy 3.5
+Woodford Ford 9
+Woodford Logan 8
+Grundy Christian 7
+Christian Douglas 6
+Champaign Ford 3
+Ford Will 2
+Mason Woodford 1
+Champaign Douglas 11

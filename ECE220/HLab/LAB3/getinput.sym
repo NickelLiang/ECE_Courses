@@ -1,0 +1,20 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	GETINPUT          3400
+//	GI_CHECK_PLAYER   3403
+//	GI_P1             3407
+//	GI_P2             340A
+//	GI_ECHO           340D
+//	GI_INVALID        341A
+//	GI_DONE           341D
+//	GI_SaveR0         3421
+//	GI_SaveR1         3422
+//	GI_SaveR7         3423
+//	GI_ASCII_ZERO     3424
+//	GI_NEWLINE        3425
+//	GI_P1_PROMPT      3426
+//	GI_P2_PROMPT      3427
+//	GI_INVALID_INPUT  3428
+

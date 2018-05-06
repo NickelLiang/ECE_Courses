@@ -1,0 +1,11 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	LOOP_ROW          3007
+//	LOOP_COLUMN       300A
+//	COLUMN_DONE       3011
+//	DONE              3015
+//	ASCII_NL          3016
+//	IMAGEADDR         3017
+

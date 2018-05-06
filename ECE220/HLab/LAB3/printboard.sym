@@ -1,0 +1,24 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	PRINTBOARD        3600
+//	PB_ROW_LOOP       3609
+//	PB_COL_LOOP       360D
+//	PB_PRINT_P1       3618
+//	PB_PRINT_P2       361B
+//	PB_COL_DONE       361E
+//	PB_ROW_DONE       3622
+//	PB_SaveR0         3629
+//	PB_SaveR1         362A
+//	PB_SaveR2         362B
+//	PB_SaveR3         362C
+//	PB_SaveR4         362D
+//	PB_SaveR7         362E
+//	PB_BOARD          362F
+//	PB_ASCII_ZERO     3630
+//	PB_NEWLINE        3631
+//	PB_EMPTY_PIECE    3632
+//	PB_P1_PIECE       3633
+//	PB_P2_PIECE       3634
+

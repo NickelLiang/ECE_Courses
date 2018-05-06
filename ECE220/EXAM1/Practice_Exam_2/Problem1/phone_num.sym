@@ -1,0 +1,22 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	ECHO              3001
+//	CHECK_KBSR        3006
+//	CHECK_DSR         300B
+//	CHECK_VALID       300F
+//	VALID_LOOP        3015
+//	PRINT_VALID       301F
+//	PRINT_INVALID     3025
+//	DONE              3028
+//	KBSR              3029
+//	KBDR              302A
+//	DSR               302B
+//	DDR               302C
+//	STORE             302D
+//	ASCII_NL          302E
+//	MASK              302F
+//	INV_MSG           3030
+//	VAL_MSG           3046
+

@@ -1,0 +1,27 @@
+; This is the file you will use for the lab assignment
+; Make sure to comment your code properly and don't exceed 
+; the line limitation for this assignment.  Good luck!
+
+0011 0001 0000 0000 ; x3100 - starting address of the program
+
+; The program description and code starts here
+
+; Nickel Liang, 04/06/2017, 10 positive number adder
+; R3: Memory address of the number being analyzed
+; R4: Counter, count how many numbers analyzed
+; R5: Record Final Sum
+; R6: Temporary Register
+
+1110 011 000110001 ; R3 <- PC + x31, address of number arrary	x3100
+0101 101 101 1 00000 ; R5 <- R5 AND 0, set R5 to 0		x3101
+0001 100 101 1 01010 ; R4 <- R5 ADD 10, set R4 to 10		x3102
+
+0110 110 011 000000 ; R6 <- M[R3 + #0], load first number	x3103
+0000 100 000000001 ; if R6 is negative, skip the next line	x3104
+0001 101 101 000 110 ; R5 <- R5 + R6, add positive # to R5	x3105
+0001 011 011 1 00001 ; R3 <- R3 + #1, increment pointer		x3106
+0001 100 100 1 11111 ; R4 <- R4 - #1, decrement counter		x3107
+0000 001 111111010 ; if R4 is positive, back to x3103		x3108
+1111 0000 0010 0101 ; halt					x3109
+
+

@@ -1,0 +1,16 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	FIBON             3004
+//	FIBON_LOOP        300E
+//	FIBON_MONE        3018
+//	FIBON_ONE         301B
+//	FIBON_DONE        301E
+//	FIBON_SaveR0      3023
+//	FIBON_SaveR1      3024
+//	FIBON_SaveR2      3025
+//	FIBON_SaveR3      3026
+//	INPUT             3027
+//	RESULT            3028
+

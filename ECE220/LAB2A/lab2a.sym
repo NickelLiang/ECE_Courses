@@ -1,0 +1,40 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	ECHO              3001
+//	SET_STATUS        3009
+//	NEWLINE_CHECK     300A
+//	FINAL_PRINT       3010
+//	NOT_B             3017
+//	DONE              301B
+//	STRING_B          301C
+//	STRING_NOT_B      3026
+//	SPACE             303D
+//	NEW_LINE          303E
+//	CHAR_RETURN       303F
+//	IS_BALANCED       3040
+//	CHECK_END         304A
+//	CHECK_NL          3055
+//	NOT_BALANCED      3060
+//	BALANCED          3066
+//	BALANCED_SaveR0   306C
+//	BALANCED_SaveR1   306D
+//	BALANCED_SaveR7   306E
+//	NEG_OPEN          306F
+//	NEG_END           3070
+//	NEG_NL            3071
+//	PUSH              3072
+//	OVERFLOW          3080
+//	DONE_PUSH         3081
+//	PUSH_SaveR3       3084
+//	PUSH_SaveR4       3085
+//	POP               3086
+//	UNDERFLOW         3093
+//	DONE_POP          3094
+//	POP_SaveR3        3097
+//	POP_SaveR4        3098
+//	STACK_END         3099
+//	STACK_START       309A
+//	STACK_TOP         309B
+

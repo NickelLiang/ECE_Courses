@@ -1,0 +1,22 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	NEXT_ROW          3001
+//	NEXT_CHAR         3006
+//	ADDR_FINDER       3010
+//	BEGIN_COLUMN      3015
+//	NEXT_COLUMN       301D
+//	ONE               3025
+//	PRINTED           3028
+//	DONE_ROW          302B
+//	DONE              302F
+//	ASCII_NL          3030
+//	MASK              3031
+//	MASK_CHAR         3032
+//	ZERO_CHAR         3033
+//	ONE_CHAR          3034
+//	PRINT_STR         3035
+//	ROW_LIMIT         3036
+//	FONT_DATA         3037
+

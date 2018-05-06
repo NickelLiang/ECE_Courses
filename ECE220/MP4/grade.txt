@@ -1,0 +1,16 @@
+Compilation Results:
+********************
+
+Testing on test cases 1-3, Score below:
+***************************************
+Test1 passed
+Test2 passed
+Test3 passed
+
+Grade:
+******
+Late submission: 0
+Functionality: 90
+Comments and Style: 5
+Intro paragraph: 5
+Total: 100

@@ -1,0 +1,28 @@
+In my program, I changed the TRAP x22 (PUTS) routine itself.
+
+
+According to lc3sim-tk, PUTS start at memory location x0456 and end at memory location x0462.
+I changed the content of x0456 from
+	ST R0, OS_R0 	(x31F0)
+to
+	LEA R0, x9A 	(xE09A, which corresponding to load x04F1, an empty memory location, to R0)
+so whenever we call PUTS, the starting address of the string being print will always be x04F1.
+I also changed the content of x045F from
+	LD R0, OS_R0	(x21E7)
+to
+	AND R0, R0, #0	(x5020)
+inorder to erase the trace.
+I achieve this by simply by load target address into R0, and load changed code into that address.
+
+ 
+I also wrote a simple loop to copy my message into the previously mentioned address, x04F1.
+In this way, we can change print message to whatever we want by simply change line 38 in my code.
+
+
+The simple showcase program will try to print a test string, but with PUTS the program can only print
+our hacked string, in this case is "Hacked by Nickel" Then the showcase program will print
+a New Line character, and then HALT. However, since in the system HALT routine, it call PUTS again
+inorder to print some system message. So our program will eventrlly print our hacked string twice:
+	Hacked by Nickel
+	Hacked by Nickel
+So when user call PUTS or HALT or any other routine that depend on PUTS, this message will display.

@@ -1,0 +1,14 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	OUTERLOOP         3001
+//	INNERLOOP         3005
+//	ADD_ZERO          300B
+//	OUTPUT            300E
+//	ASCII_ADD_ZERO    3014
+//	DISPLAY           3016
+//	DONE              3019
+//	ASCII_ZERO        301A
+//	ASCII_A           301B
+

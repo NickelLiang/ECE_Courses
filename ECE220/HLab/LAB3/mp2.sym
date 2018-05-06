@@ -1,0 +1,21 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	CF_GAMELOOP       3006
+//	CF_VALIDATION_LOOP  3008
+//	CF_DONE_INPUT     3014
+//	CF_WIN            3020
+//	CF_TIE            3028
+//	CF_END            302A
+//	CF_START_PROMPT   302B
+//	CF_INVALID_MOVE   302C
+//	CF_GETINPUT       302D
+//	CF_PRINTBOARD     302E
+//	CF_UPDATEBOARD    302F
+//	CF_CHECKFORWIN    3030
+//	CF_CHECKSTALEMATE  3031
+//	CF_STALEMATE_PROMPT  3032
+//	CF_P1_WIN_PROMPT  3033
+//	CF_P2_WIN_PROMPT  3034
+

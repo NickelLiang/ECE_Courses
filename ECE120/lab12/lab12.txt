@@ -1,0 +1,15 @@
+Question 1: Describe the errors that occur when trying to assemble lab12.asm. Identify the cause of each error.
+
+Several registers did not initialized;
+format error, extra comma, BRpz -> BRzp
+
+Question 2: For each label in the code, write down the corresponding memory location. 
+
+OUTERLOOP	x3007
+INNERLOOP	x3008
+INPUT		x3011
+MINU1		x3013
+
+Question 3: Between using labels and explicit memory locations/offsets, which one makes the most sense, and why?
+
+labels make more sense, since in this way we don't need to change anything even we made change to the address.

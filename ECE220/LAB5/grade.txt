@@ -1,0 +1,20 @@
+Compilation Results:
+********************
+
+Test Input Seed = 133, Answer = 2 5 4
+Enter Seed:
+2 5 4 
+
+Test Input Seed = 134, Answer = 2 4 2
+Enter Seed:
+2 4 2 Double!
+
+Test Input Seed = 135, Answer = 5 5 5
+Enter Seed:
+5 5 5 Triple!
+
+Grade: 10
+******
+Late submission: 0
+Functionality:
+Total: 

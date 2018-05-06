@@ -1,0 +1,11 @@
+Peoria 2 1
+Mason 6 0
+Woodford 3 4
+Logan 6 3
+Grundy 2 6
+Christian 9 5
+Will 0 9
+Champaign 6 7
+Ford 5 8
+Douglas 7 9
+Rantoul 0 0

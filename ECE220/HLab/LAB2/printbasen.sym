@@ -1,0 +1,38 @@
+// Symbol table
+// Scope level 0:
+//	Symbol Name       Page Address
+//	----------------  ------------
+//	BASE              3004
+//	TEST              3005
+//	PRINT             3006
+//	PRINT_LOOP        300F
+//	PRINT_OUT         3018
+//	PRINT_ADD_ZERO    3023
+//	PRINT_DISPLAY     3025
+//	PRINT_DONE        3027
+//	PRINT_ASCII_0     302E
+//	PRINT_ASCII_A     302F
+//	PRINT_SaveR0      3030
+//	PRINT_SaveR1      3031
+//	PRINT_SaveR3      3032
+//	PRINT_SaveR4      3033
+//	PRINT_SaveR5      3034
+//	PRINT_SaveR7      3035
+//	DIV               3036
+//	DIV_LOOP          303C
+//	DIV_SaveR2        3043
+//	DIV_SaveR3        3044
+//	PUSH              3045
+//	PUSH_OVERFLOW     3053
+//	PUSH_DONE         3054
+//	PUSH_SaveR3       3057
+//	PUSH_SaveR4       3058
+//	POP               3059
+//	POP_UNDERFLOW     3066
+//	POP_DONE          3067
+//	POP_SaveR3        306A
+//	POP_SaveR4        306B
+//	STACK_END         306C
+//	STACK_START       306D
+//	STACK_TOP         306E
+

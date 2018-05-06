@@ -1,0 +1,5 @@
+.ORIG x5000
+
+.FILL x00FF
+
+.END

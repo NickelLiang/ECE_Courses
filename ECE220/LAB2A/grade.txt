@@ -1,0 +1,20 @@
+Compilation Results:
+********************
+STARTING PASS 1
+0 errors found in first pass.
+STARTING PASS 2
+0 errors found in second pass.
+
+Test Input Balanced: R6 should equal 1
+R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0000 R6=x0000 R7=x0490 
+R0=x0000 R1=x7FFF R2=x0000 R3=xFFF6 R4=x0000 R5=x0001 R6=x0000 R7=x0490 
+
+Test Input Unbalanced: R6 should equal -1
+R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0000 R6=x0000 R7=x0490 
+R0=x0000 R1=x7FFF R2=xFFFF R3=xFFF6 R4=x0000 R5=xFFFF R6=x0000 R7=x0490 
+
+Grade:
+******
+Late submission: 148
+Functionality:
+Total: 
