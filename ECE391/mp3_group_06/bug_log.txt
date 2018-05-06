@@ -1,0 +1,226 @@
+Bug log
+
+Date
+04-30
+Error
+Keyboard is unfunctional during the multi-terminal:
+Type to the terminal that is running in the background
+Cursor is wrong when shifting cursor
+
+Function
+Device::keyboard_interrupt, lib.c::printf, multi_terminal::context::switch
+Reporter
+Jeff Ma
+How to fix
+ Should page the kernel memory back to the screen page when detecting the printf is called by the keyboard interrupt.
+Should store the cursor into the multi_ter_info struct array when scheduling different terminals.
+
+Date
+04-30
+Error
+General protection fault is triggered frequently while shifting terminal
+Function
+Device::pit_wrapper, system_call::execute
+Reporter
+Nickel Liang
+How to fix
+should make both function atomic. Attention for execute function, when restore flag, mask it with 0x200 to stop cli after iret.
+
+Date
+04-30
+Error
+General Protection fault after user program
+Function
+Multi_terminal::switch_context
+Reporter
+Fengze Xie
+How to fix
+Store current kernel esp and KERNEL_DS in to tss structure
+
+Date
+04-30
+Error
+When shifting terminal, background user program sometimes echos some character onto the displaying terminal.
+Function
+device::terminal_switch, device::context_switch, paging::background_user_paging
+Reporter
+Ken Xu
+How to fix
+1.have tried switching user paging immediately to background terminal after switching terminal keyboard interrupt, still does not work
+2.should consider synchronization problems
+
+Date
+04-29
+Error
+Page fault triggered after general protection fault
+Function
+system_call::execute, system_call::halt
+Reporter
+Ken Xu
+How to fix
+Return address of system_call::execute is corrupted, need to fix assembly linkage to preserve the kernel stack well.
+
+Date
+04-29
+Error
+Right arrow key not working properly
+Function
+device::keyboard_interrupt
+Reporter
+Nickel Liang
+How to fix
+Add special treatment to right arrow, check if /0 follow
+
+Date
+04-29
+Error
+RTC is not virtualized for three terminal at the same time
+Function
+Device::rtc_read, multi_terminal::context_switch
+Reporter
+Jeff Ma
+How to fix
+Store rtcFlag everytime the scheduler shifts from one terminal to another, and restore the destination terminal’s rtcFlag back.
+
+Date
+04-27
+Error
+Cannot open enough 6 files after closing some files
+Function
+system call::open
+Reporter
+Jeff Ma
+How to fix
+ set flag to file_exist/file_not_exist in a info array when open/close
+
+Date
+04-27
+Error
+Terminal glitch when waiting for enter
+Function
+terminal::terminal_read, device::getEnter
+Reporter
+Fengze Xie
+How to fix
+Clear interrupt in getEnter, restore interrupt in while loop
+
+Date
+04-27
+Error
+Screen is not cleared before launch or reopen new terminal
+Function
+multi_terminal::switch_context
+Reporter
+Nickel Liang
+How to fix
+Add clearScreen before each execution
+
+Date
+04-24
+Error
+Backspace can delete the characters printed by last buffer
+Function
+Device::keyboard_interrupt, terminal::terminal_read
+Reporter
+Fengze Xie
+How to fix
+We reset the buffer index every time after terminal write
+
+Date
+04-22
+Error
+Keyboard buffer messed up after switch terminal
+Function
+device::context_switch
+Reporter
+Nickel Liang
+How to fix
+Save keyboard buffer index and content into terminal info structure
+
+Date
+04-20
+Error
+Register info didn’t store into struct properly, typo in function
+Function
+device_wrapper.S
+Reporter
+Nickel Liang
+How to fix
+Change movl to leal, fix all typo
+
+Date
+04-19
+Error
+cat directory not working
+Function
+file_system::directory_read
+Reporter
+Ken Xu
+How to fix
+fixed directory_read function to accept arbitrary input length, handles if input buffer is too large.
+
+Date
+04-09
+Error
+General protection fault
+Function
+system call:: halt
+Reporter
+Jeff Ma
+How to fix
+Should restore ebp during execution and restore it when halting
+
+Date
+04-09
+Error
+After exception, a process is not squashed.
+Function
+Exception_interrupt, system_call::halt
+Reporter
+Jeff Ma
+How to fix
+Initialize a global signal and set the flag whenever an exception happens. Call halt immediately in the exception handler.
+
+Date
+04-09
+Error
+Infinity number of process can be executed, which eventually crash ther terminal
+Function
+system_call:execute
+Reporter
+Nickel Liang
+How to fix
+Add a process number count checker in execute
+
+Date
+04-08
+Error
+Return value of system call wrapper is not correct
+Function
+system_call_wrapper::system_call_wrapper
+Reporter
+Fengze Xie
+How to fix
+This hug happened because we use pushal and popal in the system call wrapper, but the return value from system call table is stored in eax, which is replaced when we use popal. We push and pop all the registers except eax to solve this bug
+
+Date
+04-07
+Error
+Interrupts are not atomic
+Function
+idt::idt_init_exceptions
+Reporter
+Fengze Xie
+How to fix
+Set the gate type of interrupts from trap gate to interrupt gate
+
+Date
+03-12
+Error
+Keyboard racing condition during typing, glitch during typing
+Function
+device.c::keyboard_interrupt
+Reporter
+Nickel Liang
+How to fix
+Make keyboard_interrupt partially atomic, add cli and sti
