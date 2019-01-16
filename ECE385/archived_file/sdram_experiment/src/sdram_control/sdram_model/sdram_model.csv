@@ -1,0 +1,23 @@
+# system info sdram_model on 2018.12.02.21:03:37
+system_info:
+name,value
+DEVICE,EP4CE115F29C7
+DEVICE_FAMILY,Cyclone IV E
+GENERATION_ID,1543806216
+#
+#
+# Files generated for sdram_model on 2018.12.02.21:03:37
+files:
+filepath,kind,attributes,module,is_top
+simulation/sdram_model.v,VERILOG,,sdram_model,true
+simulation/submodules/sdram_model_sdram_controller.v,VERILOG,,sdram_model_sdram_controller,false
+simulation/submodules/sdram_model_sdram_controller_test_component.v,VERILOG,,sdram_model_sdram_controller,false
+simulation/submodules/altera_reset_controller.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_synchronizer.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_controller.sdc,SDC,,altera_reset_controller,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+sdram_model.sdram_controller,sdram_model_sdram_controller
+sdram_model.rst_controller,altera_reset_controller

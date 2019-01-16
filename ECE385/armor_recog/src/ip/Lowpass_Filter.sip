@@ -1,0 +1,25 @@
+set_global_assignment -entity "Lowpass_Filter" -library "lib_Lowpass_Filter" -name IP_TOOL_NAME "altera_fir_compiler_ii"
+set_global_assignment -entity "Lowpass_Filter" -library "lib_Lowpass_Filter" -name IP_TOOL_VERSION "18.1"
+set_global_assignment -entity "Lowpass_Filter" -library "lib_Lowpass_Filter" -name IP_TOOL_ENV "mwpim"
+set_global_assignment -library "lib_Lowpass_Filter" -name SPD_FILE [file join $::quartus(sip_path) "Lowpass_Filter.spd"]
+
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/dspba_library_package.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/dspba_library.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_math_pkg_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_lib_pkg_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_avalon_streaming_controller_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_avalon_streaming_sink_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_avalon_streaming_source_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/auk_dspip_roundsat_hpfir.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/altera_avalon_sc_fifo.v"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_rtl_core.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_ast.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_nativelink.tcl"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_msim.tcl"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_tb.vhd"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_mlab.m"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_model.m"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_coef_int.txt"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_input.txt"]
+set_global_assignment -library "lib_Lowpass_Filter" -name MISC_FILE [file join $::quartus(sip_path) "Lowpass_Filter_sim/Lowpass_Filter_param.txt"]

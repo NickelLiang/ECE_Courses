@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/altera_reset_controller.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_synchronizer.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_controller.sdc"
+   type="SDC"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/sdram_model_sdram_controller.v"
+   type="VERILOG"
+   library="sdram_controller" />
+ <file
+   path="simulation/submodules/sdram_model_sdram_controller_test_component.v"
+   type="VERILOG"
+   library="sdram_controller" />
+ <file path="simulation/sdram_model.v" type="VERILOG" />
+ <topLevel name="sdram_model" />
+ <deviceFamily name="cycloneive" />
+</simPackage>

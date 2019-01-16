@@ -1,0 +1,253 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/ece385-fa18/sdram_experiment/simulation/modelsim
+vmain_pll
+Z1 !s110 1543792437
+!i10b 1
+!s100 8zBQVa]IE2OJZTgNWac3V2
+IRe<S:K3YR`_W<IWJ[?fVJ2
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1543560181
+8C:/ece385-fa18/sdram_experiment/src/main_pll.v
+FC:/ece385-fa18/sdram_experiment/src/main_pll.v
+Z3 L0 39
+Z4 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z5 !s108 1543792437.000000
+!s107 C:/ece385-fa18/sdram_experiment/src/main_pll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src|C:/ece385-fa18/sdram_experiment/src/main_pll.v|
+!i113 1
+Z6 o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+C:/ece385-fa18/sdram_experiment/src
+Z7 tCvgOpt 0
+vmain_pll_altpll
+R1
+!i10b 1
+!s100 Pl[dijm3EjVK0mQ5Vbj^F2
+IzlS5KZOg][SLmjl`]6Xd>1
+R2
+R0
+w1543562668
+8C:/ece385-fa18/sdram_experiment/db/main_pll_altpll.v
+FC:/ece385-fa18/sdram_experiment/db/main_pll_altpll.v
+L0 29
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/db/main_pll_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/db|C:/ece385-fa18/sdram_experiment/db/main_pll_altpll.v|
+!i113 1
+R6
+!s92 -vlog01compat -work work +incdir+C:/ece385-fa18/sdram_experiment/db
+R7
+vsdram_control
+Z8 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+R1
+!i10b 1
+!s100 ^DBRekfM=L4KjA@R^XcHU2
+I??5:O4B@0T1RWeJMQ<2j<0
+R2
+!s105 sdram_control_sv_unit
+S1
+R0
+w1543791969
+8C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_control.sv
+FC:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_control.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_control.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/sdram_control|C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_control.sv|
+!i113 1
+Z9 o-sv -work work
+!s92 -sv -work work +incdir+C:/ece385-fa18/sdram_experiment/src/sdram_control
+R7
+vsdram_control_sim
+R8
+!s110 1543792438
+!i10b 1
+!s100 7V1?0;5PVzYZFfz@7i1ee1
+IWdQGdWkZE:_hgKgLSYLFa3
+R2
+!s105 sdram_control_sim_sv_unit
+S1
+R0
+w1543792401
+8C:/ece385-fa18/sdram_experiment/src/sdram_control_sim.sv
+FC:/ece385-fa18/sdram_experiment/src/sdram_control_sim.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/sdram_control_sim.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src|C:/ece385-fa18/sdram_experiment/src/sdram_control_sim.sv|
+!i113 1
+R9
+Z10 !s92 -sv -work work +incdir+C:/ece385-fa18/sdram_experiment/src
+R7
+vsdram_experiment
+R8
+R1
+!i10b 1
+!s100 g8Yh0]O2_8dnK@0^9Uk7S1
+IdUDlHDzB:m5b34UHQRXIN2
+R2
+!s105 sdram_experiment_sv_unit
+S1
+R0
+w1543789072
+8C:/ece385-fa18/sdram_experiment/src/sdram_experiment.sv
+FC:/ece385-fa18/sdram_experiment/src/sdram_experiment.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/sdram_experiment.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src|C:/ece385-fa18/sdram_experiment/src/sdram_experiment.sv|
+!i113 1
+R9
+R10
+R7
+vsdram_fifo
+R1
+!i10b 1
+!s100 8_7>7U6om_PHCN^z1o`:o3
+I?aa<@DA<A<0?=GnbfaCHR1
+R2
+R0
+w1543552758
+8C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_fifo.v
+FC:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_fifo.v
+R3
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_fifo.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/sdram_control|C:/ece385-fa18/sdram_experiment/src/sdram_control/sdram_fifo.v|
+!i113 1
+R6
+!s92 -vlog01compat -work work +incdir+C:/ece385-fa18/sdram_experiment/src/sdram_control
+R7
+vsimulate_camera
+R8
+R1
+!i10b 1
+!s100 S_n;Pf:Lf5i7;K3Ua4cW]2
+Io03dUBK7QchgXMCYOe3[W0
+R2
+!s105 simulate_camera_sv_unit
+S1
+R0
+w1543714856
+8C:/ece385-fa18/sdram_experiment/src/camera_control/simulate_camera.sv
+FC:/ece385-fa18/sdram_experiment/src/camera_control/simulate_camera.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/camera_control/simulate_camera.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/camera_control|C:/ece385-fa18/sdram_experiment/src/camera_control/simulate_camera.sv|
+!i113 1
+R9
+!s92 -sv -work work +incdir+C:/ece385-fa18/sdram_experiment/src/camera_control
+R7
+vvga_color
+R8
+R1
+!i10b 1
+!s100 S=Pc@OWcjY;;>C2`dIX_P1
+IjgiGS?2OE91>T]hdczcbQ0
+R2
+!s105 vga_color_sv_unit
+S1
+R0
+Z11 w1543600123
+8C:/ece385-fa18/sdram_experiment/src/vga_control/vga_color.sv
+FC:/ece385-fa18/sdram_experiment/src/vga_control/vga_color.sv
+Z12 FC:/ece385-fa18/sdram_experiment/src/vga_control/vga_control_param.h
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/vga_control/vga_control_param.h|C:/ece385-fa18/sdram_experiment/src/vga_control/vga_color.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/vga_control|C:/ece385-fa18/sdram_experiment/src/vga_control/vga_color.sv|
+!i113 1
+R9
+Z13 !s92 -sv -work work +incdir+C:/ece385-fa18/sdram_experiment/src/vga_control
+R7
+vvga_control
+R8
+R1
+!i10b 1
+!s100 6249fc3`i75GE[`C=o_`C2
+IdQ^4gT0<GTf=4S:Ag`]Qn2
+R2
+!s105 vga_control_sv_unit
+S1
+R0
+w1543600130
+8C:/ece385-fa18/sdram_experiment/src/vga_control/vga_control.sv
+FC:/ece385-fa18/sdram_experiment/src/vga_control/vga_control.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/vga_control/vga_control.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/vga_control|C:/ece385-fa18/sdram_experiment/src/vga_control/vga_control.sv|
+!i113 1
+R9
+R13
+R7
+vvga_signal
+R8
+R1
+!i10b 1
+!s100 WDO=;OHOB_Mg]S89Bf>fP1
+IEU<[o_Djz8RWZ?LY?I6>b1
+R2
+!s105 vga_signal_sv_unit
+S1
+R0
+R11
+8C:/ece385-fa18/sdram_experiment/src/vga_control/vga_signal.sv
+FC:/ece385-fa18/sdram_experiment/src/vga_control/vga_signal.sv
+R12
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/ece385-fa18/sdram_experiment/src/vga_control/vga_control_param.h|C:/ece385-fa18/sdram_experiment/src/vga_control/vga_signal.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/ece385-fa18/sdram_experiment/src/vga_control|C:/ece385-fa18/sdram_experiment/src/vga_control/vga_signal.sv|
+!i113 1
+R9
+R13
+R7
