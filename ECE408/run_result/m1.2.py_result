@@ -1,0 +1,7 @@
+✱ Running /usr/bin/time python m1.2.py
+Loading fashion-mnist data... done
+Loading model... done
+New Inference
+EvalMetric: {'accuracy': 0.8236}
+4.35user 3.41system 0:04.30elapsed 180%CPU (0avgtext+0avgdata 2836344maxresident)k
+0inputs+4552outputs (0major+661560minor)pagefaults 0swaps
