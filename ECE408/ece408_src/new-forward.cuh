@@ -3,7 +3,8 @@
 
 #include <mxnet/base.h>
 
-#define TILE_WIDTH 32
+#define TILE_WIDTH 16
+__constant__ float KERNEL[2400]; // Second kernel is 2400 in size
 
 namespace mxnet
 {
@@ -97,6 +98,57 @@ __global__ void forward_kernel_share_mem_conv(float *y, const float *x, const fl
     #undef k4d
 }
 
+// 2: Shared memory with kernel in constant memory: TILE = 32; 49.152ms
+__global__ void forward_kernel_share_mem_const_kernel(float *y, const float *x, const float *k,
+    const int B, const int M, const int C, const int H, const int W, const int K) {
+    const int H_out = H - K + 1;
+    const int W_out = W - K + 1;
+    const int W_grid = ceil(W_out / (float)(TILE_WIDTH));
+
+    extern __shared__ float X_share_mem[];
+
+    int share_mem_tile_width = TILE_WIDTH + K - 1;
+    int b = blockIdx.x;
+    int m = blockIdx.y;
+    int h_base = (blockIdx.z / W_grid) * TILE_WIDTH;
+    int h_index = threadIdx.y;
+    int h = h_base + h_index;
+    int w_base = (blockIdx.z % W_grid) * TILE_WIDTH;
+    int w_index = threadIdx.x;
+    int w = w_base + w_index;
+    float acc = 0.0;
+
+    #define y4d(i3, i2, i1, i0) y[(i3) * (M * H_out * W_out) + (i2) * (H_out * W_out) + (i1) * (W_out) + i0]
+    #define x4d(i3, i2, i1, i0) x[(i3) * (C * H * W) + (i2) * (H * W) + (i1) * (W) + i0]
+    #define k4d(i3, i2, i1, i0) KERNEL[(i3) * (C * K * K) + (i2) * (K * K) + (i1) * (K) + i0]
+
+    for (int c = 0; c < C; c++) { // Go over channels
+        // A: Load X_share_mem with input value
+        for (int i = h; i < h_base + share_mem_tile_width; i += TILE_WIDTH) {
+            for (int j = w; j < w_base + share_mem_tile_width; j += TILE_WIDTH) {
+                if (i < H && j < W)
+                    X_share_mem[(i - h_base) * share_mem_tile_width + (j - w_base)] = x4d(b, c, i, j);
+            }
+        }
+        __syncthreads();
+        // B: Do the convolution
+        for (int p = 0; p < K; p++) {
+            for (int q = 0; q < K; q++) {
+                // if ((h_index + p < share_mem_tile_width) && (w_index + q < share_mem_tile_width)) // Add a lot of time
+                acc += X_share_mem[(h_index + p) * share_mem_tile_width + (w_index + q)] * k4d(m, c, p, q);
+            }
+        }
+        __syncthreads();
+    }
+    if (h < H_out && w < W_out) {
+        y4d(b, m, h, w) = acc;
+    }
+
+    #undef y4d
+    #undef x4d
+    #undef k4d
+}
+
 /*
    This function is called by new-inl.h
    Any code you write should be executed by this function.
@@ -120,13 +172,20 @@ void forward<gpu, float>(mshadow::Tensor<gpu, 4, float> &y, const mshadow::Tenso
     dim3 grid_dim(B, M, Y);
     dim3 block_dim(TILE_WIDTH, TILE_WIDTH, 1);
 
-    // 0: Original GPU implementation with no optimization: TILE = 32; 33.42ms
-    // forward_kernel_no_op<<<grid_dim, block_dim>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
+    // Kernel in constant memory
+    // std::cout << "B: " << B << " M: " << M << " C: " << C << " H: " << H << " W: " << W << " K: " << K << std::endl;
+    // std::cout << "Kernel: " << M * C * K * K << std::endl;
+    cudaMemcpyToSymbol(KERNEL, w.dptr_, M * C * K * K * sizeof(float));
 
-    // 1: Shared memory convolution: TILE = 32;
-    int share_mem_tile_width = TILE_WIDTH + K - 1;
-    int share_mem_size = (share_mem_tile_width * share_mem_tile_width) * sizeof(float); // Why we really need this...
-    forward_kernel_share_mem_conv<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
+    // 0: Original GPU implementation with no optimization: TILE = 32; 33.42ms
+    forward_kernel_no_op<<<grid_dim, block_dim>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
+
+    // 1: Shared memory convolution: TILE = 32; 54.4ms
+    int share_mem_size = ((TILE_WIDTH + K - 1) * (TILE_WIDTH + K - 1)) * sizeof(float); // Why we really need this...
+    // forward_kernel_share_mem_conv<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
+
+    // 2: Shared memory with kernel in constant memory: TILE = 32; 49.152ms; TILE = 16; 67.718ms;
+    forward_kernel_share_mem_const_kernel<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
 
     // Use MSHADOW_CUDA_CALL to check for CUDA runtime errors.
     MSHADOW_CUDA_CALL(cudaDeviceSynchronize());
