@@ -8,7 +8,7 @@
 
 #define _K                      5
 
-#define TILE_WIDTH_1            11
+#define TILE_WIDTH_1            22
 #define _M1                     6
 #define _C1                     1
 #define _H1                     48
