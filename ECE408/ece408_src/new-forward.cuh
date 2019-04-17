@@ -8,7 +8,7 @@
 
 #define _K                      5
 
-#define TILE_WIDTH_1            16
+#define TILE_WIDTH_1            11
 #define _M1                     6
 #define _C1                     1
 #define _H1                     48
@@ -20,7 +20,7 @@
 #define SHARE_MEM_WIDTH_1       (TILE_WIDTH_1 + _K - 1)  // 15
 #define SHARE_MEM_SIZE_1        (_C1 * SHARE_MEM_WIDTH_1 * SHARE_MEM_WIDTH_1)   // 225
 
-#define TILE_WIDTH_2            16
+#define TILE_WIDTH_2            9
 #define _M2                     16
 #define _C2                     6
 #define _H2                     22
@@ -196,28 +196,19 @@ __global__ void forward_kernel_layer_1(float *y, const float *x, const int B) {
     #define k4d(i3, i2, i1, i0) KERNEL_1[(i3) * (_C1 * _K * _K) + (i2) * (_K * _K) + (i1) * (_K) + i0]
 
     // Load X_share_mem_2
-    for (int i = h_index; i < SHARE_MEM_WIDTH_1; i += TILE_WIDTH_1) {
-        for (int j = w_index; j < SHARE_MEM_WIDTH_1; j += TILE_WIDTH_1) {
+    for (int i = h_index; i < SHARE_MEM_WIDTH_1; i += TILE_WIDTH_1)
+        for (int j = w_index; j < SHARE_MEM_WIDTH_1; j += TILE_WIDTH_1)
             if ((i + h_base < _H1) && (j + w_base < _W1))
-                // X_share_mem_2[i * SHARE_MEM_WIDTH_1 + j] = x[b * _C1 * _H1 * _W1 + (i + h_base) * _W1 + (j + w_base)];
                 X_share_mem_2[i * SHARE_MEM_WIDTH_1 + j] = x4d(b, 0, i + h_base, j + w_base);
-            // else
-            //     X_share_mem_2[i * SHARE_MEM_WIDTH_1 + j] = 0.0;
-        }
-    }
     __syncthreads();
 
     // Do conv
     float acc = 0.0;
     // if ((h < _H1_OUT) && (w < _W1_OUT) && (b < B) && (m < _M1)) {
     if ((h < _H1_OUT) && (w < _W1_OUT)) {
-        for (int p = 0; p < _K; p++) {
-            for (int q = 0; q < _K; q++) {
-                // acc += X_share_mem_2[(h_index + p) * SHARE_MEM_WIDTH_1 + (w_index + q)] * KERNEL_1[m * _K * _K + p * _K + q];
+        for (int p = 0; p < _K; p++)
+            for (int q = 0; q < _K; q++)
                 acc += X_share_mem_2[(h_index + p) * SHARE_MEM_WIDTH_1 + (w_index + q)] * k4d(m, 0, p, q);
-            }
-        }
-        // y[b * _M1 * _H1_OUT * _W1_OUT + m * _H1_OUT * _W1_OUT + h * _W1_OUT + w] = acc;
         y4d(b, m, h, w) = acc;
     }
     #undef y4d
@@ -243,32 +234,21 @@ __global__ void forward_kernel_layer_2(float *y, const float *x, const int B) {
     #define k4d(i3, i2, i1, i0) KERNEL_2[(i3) * (_C2 * _K * _K) + (i2) * (_K * _K) + (i1) * (_K) + i0]
 
     // Load X_share_mem_3
-    for (int c = 0; c < _C2; c++) {
-        for (int i = h_index; i < SHARE_MEM_WIDTH_2; i += TILE_WIDTH_2) {
-            for (int j = w_index; j < SHARE_MEM_WIDTH_2; j += TILE_WIDTH_2) {
+    for (int c = 0; c < _C2; c++)
+        for (int i = h_index; i < SHARE_MEM_WIDTH_2; i += TILE_WIDTH_2)
+            for (int j = w_index; j < SHARE_MEM_WIDTH_2; j += TILE_WIDTH_2)
                 if ((i + h_base < _H2) && (j + w_base < _W2))
-                    // X_share_mem_3[i * SHARE_MEM_WIDTH_2 + j] = x[b * _C2 * _H2 * _W2 + c * _H2 * _W2 + (i + h_base) * _W2 + (j + w_base)];
                     X_share_mem_3[c * SHARE_MEM_WIDTH_2 * SHARE_MEM_WIDTH_2 + i * SHARE_MEM_WIDTH_2 + j] = x4d(b, c, i + h_base, j + w_base);
-                // else
-                //     X_share_mem_3[i * SHARE_MEM_WIDTH_2 + j] = 0.0;
-            }
-        }
-    }
     __syncthreads();
 
     // Do conv
     float acc = 0.0;
     // if ((h < _H2_OUT) && (w < _W2_OUT) && (b < B) && (m < _M2)) {
     if ((h < _H2_OUT) && (w < _W2_OUT)) {
-        for (int c = 0; c < _C2; c++) {
-            for (int p = 0; p < _K; p++) {
-                for (int q = 0; q < _K; q++) {
-                    // acc += X_share_mem_3[(h_index + p) * SHARE_MEM_WIDTH_2 + (w_index + q)] * KERNEL_2[m * _C2 * _K * _K + c * _K * _K + p * _K + q];
+        for (int c = 0; c < _C2; c++)
+            for (int p = 0; p < _K; p++)
+                for (int q = 0; q < _K; q++)
                     acc += X_share_mem_3[c * SHARE_MEM_WIDTH_2 * SHARE_MEM_WIDTH_2 + (h_index + p) * SHARE_MEM_WIDTH_2 + (w_index + q)] * k4d(m, c, p, q);
-                }
-            }
-        }
-        // y[b * _M2 * _H2_OUT * _W2_OUT + m * _H2_OUT * _W2_OUT + h * _W2_OUT + w] = acc;
         y4d(b, m, h, w) = acc;
     }
     #undef y4d
