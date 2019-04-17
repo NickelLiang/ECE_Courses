@@ -295,7 +295,7 @@ void forward<gpu, float>(mshadow::Tensor<gpu, 4, float> &y, const mshadow::Tenso
     // int share_mem_size = ((TILE_WIDTH + K - 1) * (TILE_WIDTH + K - 1)) * sizeof(float);
     // forward_kernel_share_mem_const_kernel<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, w.dptr_, B, M, C, H, W, K);
 
-    // 3:
+    // 3: Multiple kernel implementations for different layer sizes; TILE_1 = 22; TILE_2 = 9; 14.899ms;
     if (C == _C1) {
         cudaMemcpyToSymbol(KERNEL_1, w.dptr_, CONST_KERNEL_SIZE_1 * sizeof(float));
         dim3 grid_dim(B, M, ceil(H_out / (float)(TILE_WIDTH_1)) * ceil(W_out / (float)(TILE_WIDTH_1)));
@@ -309,7 +309,6 @@ void forward<gpu, float>(mshadow::Tensor<gpu, 4, float> &y, const mshadow::Tenso
         int share_mem_size = SHARE_MEM_SIZE_2 * sizeof(float);
         forward_kernel_layer_2<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, B);
     }
-
 
     // Use MSHADOW_CUDA_CALL to check for CUDA runtime errors.
     MSHADOW_CUDA_CALL(cudaDeviceSynchronize());
