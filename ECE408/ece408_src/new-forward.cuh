@@ -197,18 +197,26 @@ __global__ void forward_kernel_layer_1(float *y, const float *x, const int B) {
     #define k4d(i3, i2, i1, i0) KERNEL_1[(i3) * (_C1 * _K * _K) + (i2) * (_K * _K) + (i1) * (_K) + i0]
 
     // Load X_share_mem_2
-    for (int i = h_index; i < SHARE_MEM_WIDTH_1; i += TILE_WIDTH_1)
-        for (int j = w_index; j < SHARE_MEM_WIDTH_1; j += TILE_WIDTH_1)
+    // #pragma unroll
+    for (int i = h_index; i < SHARE_MEM_WIDTH_1; i += TILE_WIDTH_1) {
+        // #pragma unroll
+        for (int j = w_index; j < SHARE_MEM_WIDTH_1; j += TILE_WIDTH_1) {
             if ((i + h_base < _H1) && (j + w_base < _W1))
                 X_share_mem_2[i * SHARE_MEM_WIDTH_1 + j] = x4d(b, 0, i + h_base, j + w_base);
+        }
+    }
     __syncthreads();
 
     // Do conv
     float acc = 0.0;
     if ((h < _H1_OUT) && (w < _W1_OUT)) {
-        for (int p = 0; p < _K; p++)
-            for (int q = 0; q < _K; q++)
+        // #pragma unroll
+        for (int p = 0; p < _K; p++) {
+            // #pragma unroll
+            for (int q = 0; q < _K; q++) {
                 acc += X_share_mem_2[(h_index + p) * SHARE_MEM_WIDTH_1 + (w_index + q)] * k4d(m, 0, p, q);
+            }
+        }
         y4d(b, m, h, w) = acc;
     }
     #undef y4d
@@ -234,20 +242,32 @@ __global__ void forward_kernel_layer_2(float *y, const float *x, const int B) {
     #define k4d(i3, i2, i1, i0) KERNEL_2[(i3) * (_C2 * _K * _K) + (i2) * (_K * _K) + (i1) * (_K) + i0]
 
     // Load X_share_mem_3
-    for (int c = 0; c < _C2; c++)
-        for (int i = h_index; i < SHARE_MEM_WIDTH_2; i += TILE_WIDTH_2)
-            for (int j = w_index; j < SHARE_MEM_WIDTH_2; j += TILE_WIDTH_2)
+    // #pragma unroll
+    for (int c = 0; c < _C2; c++) {
+        // #pragma unroll
+        for (int i = h_index; i < SHARE_MEM_WIDTH_2; i += TILE_WIDTH_2) {
+            // #pragma unroll
+            for (int j = w_index; j < SHARE_MEM_WIDTH_2; j += TILE_WIDTH_2) {
                 if ((i + h_base < _H2) && (j + w_base < _W2))
                     X_share_mem_3[c * SHARE_MEM_WIDTH_2 * SHARE_MEM_WIDTH_2 + i * SHARE_MEM_WIDTH_2 + j] = x4d(b, c, i + h_base, j + w_base);
+            }
+        }
+    }
     __syncthreads();
 
     // Do conv
     float acc = 0.0;
     if ((h < _H2_OUT) && (w < _W2_OUT)) {
-        for (int c = 0; c < _C2; c++)
-            for (int p = 0; p < _K; p++)
-                for (int q = 0; q < _K; q++)
+        // #pragma unroll
+        for (int c = 0; c < _C2; c++) {
+            // #pragma unroll
+            for (int p = 0; p < _K; p++) {
+                // #pragma unroll
+                for (int q = 0; q < _K; q++) {
                     acc += X_share_mem_3[c * SHARE_MEM_WIDTH_2 * SHARE_MEM_WIDTH_2 + (h_index + p) * SHARE_MEM_WIDTH_2 + (w_index + q)] * k4d(m, c, p, q);
+                }
+            }
+        }
         y4d(b, m, h, w) = acc;
     }
     #undef y4d
@@ -269,9 +289,33 @@ __global__ void gemm_unroll(int b, const int C, const int H, const int W, const 
     }
 }
 
+/*
+    // __global__ void gemm_unroll_layer_1(int b, float *x, float *x_unroll) {
+    //     int thread = blockIdx.x * blockDim.x + threadIdx.x;
+    //
+    //     if (thread < _K * _K * _H1_OUT * _W1_OUT) {
+    //         int row = thread / (_H1_OUT * _W1_OUT);
+    //         int col = thread % (_H1_OUT * _W1_OUT);
+    //         int kernel_row = row / _K;
+    //         x_unroll[thread] = x[b * _C1 * _H1 * _W1 + (kernel_row / _K) * _H1 * _W1 + (col / _W1_OUT + (kernel_row % _K)) * _W1 + (col % _W1_OUT + row % _K)];
+    //     }
+    // }
+    //
+    // __global__ void gemm_unroll_layer_2(int b, float *x, float *x_unroll) {
+    //     int thread = blockIdx.x * blockDim.x + threadIdx.x;
+    //
+    //     if (thread < _K * _K * _H2_OUT * _W2_OUT) {
+    //         int row = thread / (_H2_OUT * _W2_OUT);
+    //         int col = thread % (_H2_OUT * _W2_OUT);
+    //         int kernel_row = row / _K;
+    //         x_unroll[thread] = x[b * _C2 * _H2 * _W2 + (kernel_row / _K) * _H2 * _W2 + (col / _W2_OUT + (kernel_row % _K)) * _W2 + (col % _W2_OUT + row % _K)];
+    //     }
+    // }
+*/
+
 // This code is from MP3 with minor modification
 // matrixMultiplyShared<<<gridDim, blockDim>>>(w.dptr_, x_unroll, y.dptr_, K, H_unroll, H_unroll, W_unroll, M, W_unroll, b);
-__global__ void matrixMultiplyShared(float *A, float *B, float *C, int numARows, int numAColumns, int numBRows, int numBColumns, int numCRows, int numCColumns, int b) {
+__global__ void matrixMultiplyShared(float * __restrict__ A, float * __restrict__ B, float * __restrict__ C, int numARows, int numAColumns, int numBRows, int numBColumns, int numCRows, int numCColumns, int b) {
     if (numAColumns != numBRows) return;
 
     __shared__ float subTileA[TILE_WIDTH][TILE_WIDTH];
@@ -283,7 +327,8 @@ __global__ void matrixMultiplyShared(float *A, float *B, float *C, int numARows,
 
     int offset = b * numCRows * numCColumns;
 
-    for (int m = 0; m < ceil(numAColumns / (float)(TILE_WIDTH)); m++){
+    #pragma unroll
+    for (int m = 0; m < ceil(numAColumns / (float)(TILE_WIDTH)); m++) {
         int row_m = m * TILE_WIDTH + threadIdx.y;
         int col_m = m * TILE_WIDTH + threadIdx.x;
 
@@ -298,6 +343,7 @@ __global__ void matrixMultiplyShared(float *A, float *B, float *C, int numARows,
             subTileB[threadIdx.y][threadIdx.x] = 0.0;
 
         __syncthreads();
+        #pragma unroll
         for (int k = 0; k < TILE_WIDTH; k++)
             value += subTileA[threadIdx.y][k] * subTileB[k][threadIdx.x];
         __syncthreads();
@@ -306,6 +352,79 @@ __global__ void matrixMultiplyShared(float *A, float *B, float *C, int numARows,
     if ((row < numCRows) && (col < numCColumns))
         C[offset + row * numCColumns + col] = value;
 }
+/*
+// __global__ void matrixMultiplyShared_layer_1(float *A, float *B, float *C, int numARows, int numAColumns, int numBRows, int numBColumns, int numCRows, int numCColumns, int b) {
+//     if (numAColumns != numBRows) return;
+//
+//     __shared__ float subTileA[TILE_WIDTH_1][TILE_WIDTH_1];
+//     __shared__ float subTileB[TILE_WIDTH_1][TILE_WIDTH_1];
+//
+//     float value = 0;
+//     int row = blockIdx.y * TILE_WIDTH_1 + threadIdx.y;
+//     int col = blockIdx.x * TILE_WIDTH_1 + threadIdx.x;
+//
+//     int offset = b * numCRows * numCColumns;
+//
+//     for (int m = 0; m < ceil(numAColumns / (float)(TILE_WIDTH_1)); m++) {
+//         int row_m = m * TILE_WIDTH_1 + threadIdx.y;
+//         int col_m = m * TILE_WIDTH_1 + threadIdx.x;
+//
+//         if (col_m < numAColumns)
+//             subTileA[threadIdx.y][threadIdx.x] = A[row * numAColumns + col_m];
+//         else
+//             subTileA[threadIdx.y][threadIdx.x] = 0.0;
+//
+//         if (row_m < numBRows)
+//             subTileB[threadIdx.y][threadIdx.x] = B[row_m * numBColumns + col];
+//         else
+//             subTileB[threadIdx.y][threadIdx.x] = 0.0;
+//
+//         __syncthreads();
+//         for (int k = 0; k < TILE_WIDTH_1; k++)
+//             value += subTileA[threadIdx.y][k] * subTileB[k][threadIdx.x];
+//         __syncthreads();
+//     }
+//
+//     if ((row < numCRows) && (col < numCColumns))
+//         C[offset + row * numCColumns + col] = value;
+// }
+//
+// __global__ void matrixMultiplyShared_layer_2(float *A, float *B, float *C, int numARows, int numAColumns, int numBRows, int numBColumns, int numCRows, int numCColumns, int b) {
+//     if (numAColumns != numBRows) return;
+//
+//     __shared__ float subTileA[TILE_WIDTH_2][TILE_WIDTH_2];
+//     __shared__ float subTileB[TILE_WIDTH_2][TILE_WIDTH_2];
+//
+//     float value = 0;
+//     int row = blockIdx.y * TILE_WIDTH_2 + threadIdx.y;
+//     int col = blockIdx.x * TILE_WIDTH_2 + threadIdx.x;
+//
+//     int offset = b * numCRows * numCColumns;
+//
+//     for (int m = 0; m < ceil(numAColumns / (float)(TILE_WIDTH_2)); m++) {
+//         int row_m = m * TILE_WIDTH_2 + threadIdx.y;
+//         int col_m = m * TILE_WIDTH_2 + threadIdx.x;
+//
+//         if (col_m < numAColumns)
+//             subTileA[threadIdx.y][threadIdx.x] = A[row * numAColumns + col_m];
+//         else
+//             subTileA[threadIdx.y][threadIdx.x] = 0.0;
+//
+//         if (row_m < numBRows)
+//             subTileB[threadIdx.y][threadIdx.x] = B[row_m * numBColumns + col];
+//         else
+//             subTileB[threadIdx.y][threadIdx.x] = 0.0;
+//
+//         __syncthreads();
+//         for (int k = 0; k < TILE_WIDTH_2; k++)
+//             value += subTileA[threadIdx.y][k] * subTileB[k][threadIdx.x];
+//         __syncthreads();
+//     }
+//
+//     if ((row < numCRows) && (col < numCColumns))
+//         C[offset + row * numCColumns + col] = value;
+// }
+*/
 
 __global__ void forward_kernel_fusion(const int C, const int H, const int W, const int M, float *k, float *x, float *y, int row_a, int col_a, int row_b, int col_b, int row_c, int col_c) {
     __shared__ float tile_m[TILE_WIDTH][TILE_WIDTH]; // M for x shared
@@ -383,23 +502,19 @@ void forward<gpu, float>(mshadow::Tensor<gpu, 4, float> &y, const mshadow::Tenso
     // 3: Multiple kernel implementations for different layer sizes; TILE_1 = 22; TILE_2 = 9; 14.899ms;
     // if (C == _C1) {
     //     cudaMemcpyToSymbol(KERNEL_1, w.dptr_, CONST_KERNEL_SIZE_1 * sizeof(float));
-    //     dim3 grid_dim(B, M, ceil(H_out / (float)(TILE_WIDTH_1)) * ceil(W_out / (float)(TILE_WIDTH_1)));
+    //     dim3 grid_dim(B, _M1, ceil(_H1_OUT / (float)(TILE_WIDTH_1)) * ceil(_W1_OUT / (float)(TILE_WIDTH_1)));
     //     dim3 block_dim(TILE_WIDTH_1, TILE_WIDTH_1, 1);
     //     int share_mem_size = SHARE_MEM_SIZE_1 * sizeof(float);
     //     forward_kernel_layer_1<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, B);
     // } else if (C == _C2) {
     //     cudaMemcpyToSymbol(KERNEL_2, w.dptr_, CONST_KERNEL_SIZE_2 * sizeof(float));
-    //     dim3 grid_dim(B, M, ceil(H_out / (float)(TILE_WIDTH_2)) * ceil(W_out / (float)(TILE_WIDTH_2)));
+    //     dim3 grid_dim(B, _M2, ceil(_H2_OUT / (float)(TILE_WIDTH_2)) * ceil(_W2_OUT / (float)(TILE_WIDTH_2)));
     //     dim3 block_dim(TILE_WIDTH_2, TILE_WIDTH_2, 1);
     //     int share_mem_size = SHARE_MEM_SIZE_2 * sizeof(float);
     //     forward_kernel_layer_2<<<grid_dim, block_dim, share_mem_size>>>(y.dptr_, x.dptr_, B);
     // }
 
-
-
-
-
-
+    // 4. gemm, TILE_WIDTH = 25, 24ms; TILE_WIDTH = 32, 23ms
     int H_unroll = C * K * K;
     int W_unroll = H_out * W_out;
 
@@ -414,18 +529,45 @@ void forward<gpu, float>(mshadow::Tensor<gpu, 4, float> &y, const mshadow::Tenso
     }
     cudaFree(x_unroll);
 
-
-
-
+    // 5. kernel fusion
     // int H_unroll = C * K * K;
     // int W_unroll = H_out * W_out;
     // dim3 block_dim(TILE_WIDTH, TILE_WIDTH, 1);
     // dim3 grid_dim(B, ceil(W_unroll / (float)(TILE_WIDTH)), ceil(M / (float)(TILE_WIDTH)));
     // forward_kernel_fusion<<<grid_dim, block_dim>>>(C, H, W, M, w.dptr_, x.dptr_, y.dptr_, M, W_unroll, W_unroll, H_unroll, M, H_unroll);
 
+    // 6. unroll and restrict on part 3 multiple kernel
 
+    // 7. parameter sweeping on part 3 multiple kernel
 
-
+    // 8. gemm multiple kernel
+    // if (C == _C1) {
+    //     int H_unroll = _C1 * _K * _K;
+    //     int W_unroll = _H1_OUT * _W1_OUT;
+    //     float* x_unroll;
+    //     cudaMalloc((void **)&x_unroll, W_unroll * H_unroll * sizeof(float));
+    //
+    //     dim3 grid_dim(ceil(W_unroll / (float)(TILE_WIDTH_1)), ceil(_M1 / (float)(TILE_WIDTH_1)));
+    //     dim3 block_dim(TILE_WIDTH_1, TILE_WIDTH_1, 1);
+    //     for (int b = 0; b < B; b++) {
+    //         gemm_unroll_layer_1<<<ceil((W_unroll * H_unroll) / (float)MAX_THREADS), MAX_THREADS>>>(b, x.dptr_, x_unroll);
+    //         matrixMultiplyShared_layer_1<<<gridDim, blockDim>>>(w.dptr_, x_unroll, y.dptr_, _K, H_unroll, H_unroll, W_unroll, _M1, W_unroll, b);
+    //     }
+    //     cudaFree(x_unroll);
+    // } else if (C == _C2) {
+    //     int H_unroll = _C2 * _K * _K;
+    //     int W_unroll = _H2_OUT * _W2_OUT;
+    //     float* x_unroll;
+    //     cudaMalloc((void **)&x_unroll, W_unroll * H_unroll * sizeof(float));
+    //
+    //     dim3 grid_dim(ceil(W_unroll / (float)(TILE_WIDTH_2)), ceil(_M2 / (float)(TILE_WIDTH_2)));
+    //     dim3 block_dim(TILE_WIDTH_2, TILE_WIDTH_2, 1);
+    //     for (int b = 0; b < B; b++) {
+    //         gemm_unroll_layer_2<<<ceil((W_unroll * H_unroll) / (float)MAX_THREADS), MAX_THREADS>>>(b, x.dptr_, x_unroll);
+    //         matrixMultiplyShared_layer_2<<<gridDim, blockDim>>>(w.dptr_, x_unroll, y.dptr_, _K, H_unroll, H_unroll, W_unroll, _M2, W_unroll, b);
+    //     }
+    //     cudaFree(x_unroll);
+    // }
 
     // Use MSHADOW_CUDA_CALL to check for CUDA runtime errors.
     MSHADOW_CUDA_CALL(cudaDeviceSynchronize());
