@@ -1,0 +1,192 @@
+Helpful link: 
+https://towardsdatascience.com/canny-edge-detection-step-by-step-in-python-computer-vision-b49c3a2d8123
+https://github.com/MadhavEsDios/Canny-Edge-Detector/blob/master/Canny%20Edge%20Detector.ipynb
+
+================================================================================
+Demo
+================================================================================
+           threshold: 0.140000  
+overall max F1 score: 0.518496  
+average max F1 score: 0.556084  
+                  AP: 0.426090  
+runtime (in seconds): 0.007839  
+
+================================================================================
+Part1
+================================================================================
+           threshold: 0.160000  
+overall max F1 score: 0.538742  
+average max F1 score: 0.574959  
+                  AP: 0.491509  
+runtime (in seconds): 0.008096 
+
+================================================================================
+Part2
+================================================================================
+pts=3, sigma=0.1 
+with blur first
+           threshold: 0.160000  
+overall max F1 score: 0.538742  
+average max F1 score: 0.574959  
+                  AP: 0.491509  
+runtime (in seconds): 0.009716 
+
+pts=3, sigma=0.5 
+with blur first
+           threshold: 0.130000  
+overall max F1 score: 0.552068  
+average max F1 score: 0.595046  
+                  AP: 0.516734  
+runtime (in seconds): 0.012281 
+
+pts=3, sigma=1
+           threshold: 0.060000  
+overall max F1 score: 0.538707  
+average max F1 score: 0.552723  
+                  AP: 0.491366  
+runtime (in seconds): 0.007753 
+
+pts=3, sigma=2
+           threshold: 0.020000  
+overall max F1 score: 0.530813  
+average max F1 score: 0.554240  
+                  AP: 0.463534  
+runtime (in seconds): 0.008648  
+
+pts=3, sigma=3
+           threshold: 0.010000  
+overall max F1 score: 0.521820  
+average max F1 score: 0.525656  
+                  AP: 0.347152  
+runtime (in seconds): 0.007810  
+with new print method
+           threshold: 0.230000  
+overall max F1 score: 0.549242  
+average max F1 score: 0.580246  
+                  AP: 0.505616  
+runtime (in seconds): 0.009615
+with blur first
+           threshold: 0.020000  
+overall max F1 score: 0.588649  
+average max F1 score: 0.605890  
+                  AP: 0.527774  
+runtime (in seconds): 0.011158 
+
+pts=5, sigma=3
+           threshold: 0.040000  
+overall max F1 score: 0.555047  
+average max F1 score: 0.573617  
+                  AP: 0.520657  
+runtime (in seconds): 0.009763 
+
+pts=7, sigma=3
+           threshold: 0.070000  
+overall max F1 score: 0.574307  
+average max F1 score: 0.597510  
+                  AP: 0.542287  
+runtime (in seconds): 0.015747  
+
+pts=9, sigma=3
+           threshold: 0.100000  
+overall max F1 score: 0.584229  
+average max F1 score: 0.610578  
+                  AP: 0.553679  
+runtime (in seconds): 0.022456  
+
+pts=11, sigma=1
+           threshold: 0.120000  
+overall max F1 score: 0.562441  
+average max F1 score: 0.598975  
+                  AP: 0.533221  
+runtime (in seconds): 0.025165  
+
+pts=11, sigma=2
+           threshold: 0.130000  
+overall max F1 score: 0.586823  
+average max F1 score: 0.611737  
+                  AP: 0.559906  
+runtime (in seconds): 0.026943
+
+pts=11, sigma=3
+           threshold: 0.110000  
+overall max F1 score: 0.590384  
+average max F1 score: 0.615288  
+                  AP: 0.563873  
+runtime (in seconds): 0.018162
+
+pts=11, sigma=4
+           threshold: 0.090000  
+overall max F1 score: 0.590670  
+average max F1 score: 0.613623  
+                  AP: 0.563679  
+runtime (in seconds): 0.021751 
+
+pts=15, sigma=3
+           threshold: 0.130000  
+overall max F1 score: 0.595459  
+average max F1 score: 0.619446  
+                  AP: 0.572679  
+runtime (in seconds): 0.025967  
+with new print method
+           threshold: 0.220000  
+overall max F1 score: 0.601513  
+average max F1 score: 0.622516  
+                  AP: 0.573455  
+runtime (in seconds): 0.027333 
+
+pts=19, sigma=3
+               threshold: 0.130000  
+    overall max F1 score: 0.597084  
+    average max F1 score: 0.625922  
+                      AP: 0.576694  
+    runtime (in seconds): 0.026896 
+
+pts=23, sigma=3
+               threshold: 0.130000  
+    overall max F1 score: 0.597427  
+    average max F1 score: 0.628617  
+                      AP: 0.577207  
+    runtime (in seconds): 0.037732 
+
+
+pts=25, sigma=3, nms-itp, cc=True
+               threshold: 0.120000  
+    overall max F1 score: 0.613284  
+    average max F1 score: 0.635010  
+                      AP: 0.608614  
+    runtime (in seconds): 1.380552
+
+pts=25, sigma=3, nms-itp, cc=False
+               threshold: 0.120000  
+    overall max F1 score: 0.613210  
+    average max F1 score: 0.635003  
+                      AP: 0.608640  
+    runtime (in seconds): 1.429545
+
+pts=25, sigma=4, nmscc=True
+               threshold: 0.120000  
+    overall max F1 score: 0.614045  
+    average max F1 score: 0.641392  
+                      AP: 0.617383  
+    runtime (in seconds): 1.422888 
+
+pts=29, sigma=3, nms-itp, cc=True
+               threshold: 0.120000  
+    overall max F1 score: 0.613280  
+    average max F1 score: 0.634946  
+                      AP: 0.608598  
+    runtime (in seconds): 1.411481 
+
+pts=29, sigma=4, nmscc=True
+               threshold: 0.120000  
+    overall max F1 score: 0.614045  
+    average max F1 score: 0.641392  
+                      AP: 0.617383  
+    runtime (in seconds): 1.394044
+
+pts=35, sigma=4.5, nmscc=True
+               threshold: 0.120000  
+    overall max F1 score: 0.612885  
+    average max F1 score: 0.636348  
+                      AP: 0.617878  
+    runtime (in seconds): 1.434215 
