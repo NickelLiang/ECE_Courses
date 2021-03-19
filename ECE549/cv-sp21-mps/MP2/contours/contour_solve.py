@@ -3,9 +3,9 @@ from scipy import signal
 from scipy import ndimage
 import cv2
 
-import matplotlib
-matplotlib.use("TkAgg")
-from matplotlib import pyplot as plt
+# import matplotlib
+# matplotlib.use("TkAgg")
+# from matplotlib import pyplot as plt
 
 def conv_demo(I):
   dx = signal.convolve2d(I, np.array([[-1, 0, 1]]), mode='same')
@@ -47,9 +47,9 @@ def interpolation_1d(a, b, alpha):
 # # non-maximum suppression
 def nms_interpolation(mag, rad, dx, dy, cc = True):
   edg = np.zeros(mag.shape)
-  print(np.amin(rad), np.amax(rad))
+  # print(np.amin(rad), np.amax(rad))
   rad[rad < 0] += 180
-  print(np.amin(rad), np.amax(rad))
+  # print(np.amin(rad), np.amax(rad))
   for i in range(1, mag.shape[0]-1):
     for j in range(1, mag.shape[1]-1):
       if (rad[i,j] >= 0 and rad[i,j] <= 45):
@@ -98,8 +98,8 @@ def compute_edges_dxdy(I):
   I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
   I = I.astype(np.float32)/255.
   
-  dx, dy = conv_part2(I, 25, 3)
-  # dx, dy = conv_part2_simple(I, 0.1)
+  dx, dy = conv_part2(I, 25, 4)
+  # dx, dy = conv_part2_simple(I, 3)
 
   direction = edge_direction(dx, dy)
   
@@ -108,14 +108,10 @@ def compute_edges_dxdy(I):
   mag = mag * 255.
 
   mag = nms_interpolation(mag, direction, dx, dy, cc=True)
+  # For better visualization
   # mag = ((mag - np.amin(mag)) / np.amax(mag - np.amin(mag))) * 255.0
   
   mag = np.clip(mag, 0, 255)
   mag = mag.astype(np.uint8)
 
-  plt.imshow(mag)
-  plt.show()
-  plt.imshow(draw_edge_dir(mag, direction))
-  plt.colorbar()
-  plt.show()
   return mag
