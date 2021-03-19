@@ -1,0 +1,55 @@
+k, sigma, w, gtype = 0.05, 1, 7, 'numpy'
+                  ap: 0.503274  
+runtime (in seconds): 0.106426 
+
+k, sigma, w, gtype = 0.05, 1, 7, 'sobel'
+                  ap: 0.427726  
+runtime (in seconds): 0.124591 
+
+k, sigma, w, gtype = 0.05, 1, 7, 'conv'
+                  ap: 0.504751  
+runtime (in seconds): 0.116052 
+
+k, sigma, w, gtype = 0.05, 1, 15, 'conv'
+                  ap: 0.404106  
+runtime (in seconds): 0.101975
+
+k, sigma, w, gtype = 0.05, 1, 5, 'conv'
+                  ap: 0.507498  
+runtime (in seconds): 0.110215
+
+k, sigma, w, gtype = 0.05, 1, 5, 'numpy'
+                  ap: 0.502667  
+runtime (in seconds): 0.112915 
+
+k, sigma, w, gtype = 0.05, 1, 3, 'conv'
+                  ap: 0.509400  
+runtime (in seconds): 0.117653
+
+k, sigma, w, gtype = 0.05, 0.9, 3, 'conv'
+                  ap: 0.531811  
+runtime (in seconds): 0.114063
+
+k, sigma, w, gtype = 0.05, 0.8, 3, 'conv'
+                  ap: 0.544183  
+runtime (in seconds): 0.114089
+
+k, sigma, w, gtype = 0.05, 0.85, 3, 'conv'
+                  ap: 0.549178  
+runtime (in seconds): 0.108400
+
+k, sigma, w, gtype = 0.05, 0.85, 3, 'sobel'
+                  ap: 0.479838  
+runtime (in seconds): 0.109107
+
+k, sigma, w, gtype = 0.05, 0.85, 3, 'numpy'
+                  ap: 0.542307  
+runtime (in seconds): 0.108885
+
+k, sigma, w, gtype = 0.04, 0.85, 3, 'conv'
+                  ap: 0.523798  
+runtime (in seconds): 0.106405
+
+k, sigma, w, gtype = 0.06, 0.85, 3, 'conv'
+                  ap: 0.544882  
+runtime (in seconds): 0.118219
