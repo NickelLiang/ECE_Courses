@@ -98,18 +98,20 @@ def compute_edges_dxdy(I):
   I = cv2.cvtColor(I, cv2.COLOR_BGR2GRAY)
   I = I.astype(np.float32)/255.
   
+  # dx, dy = conv_demo(I)
+  # dx, dy = conv_part1(I)
   dx, dy = conv_part2(I, 25, 4)
   # dx, dy = conv_part2_simple(I, 3)
 
   direction = edge_direction(dx, dy)
   
   mag = np.sqrt(dx**2 + dy**2)
-  mag = mag / 1.5
-  mag = mag * 255.
+  # mag = mag / 1.5
+  # mag = mag * 255.
 
   mag = nms_interpolation(mag, direction, dx, dy, cc=True)
   # For better visualization
-  # mag = ((mag - np.amin(mag)) / np.amax(mag - np.amin(mag))) * 255.0
+  mag = ((mag - np.amin(mag)) / np.amax(mag - np.amin(mag))) * 255.0
   
   mag = np.clip(mag, 0, 255)
   mag = mag.astype(np.uint8)

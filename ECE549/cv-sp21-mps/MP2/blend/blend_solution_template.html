@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Multi-resolution Blending</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h2 id="multi-resolution-blending">Multi-resolution Blending</h2>
+<ol>
+<li>
+<p><strong>Method Description.</strong></p>
+<!-- *TODO*: Describe the key implementation details for blending. -->
+<p>For this problem, I first convert all three images to grayscale. Then I compute the laplacian stack of two input image, by computing image with different gaussian filter and find their difference. Then I computed a gaussian stack, by computing the mask with different gaussian filter. Then I combine these three stacks with the equation given in the paper. Lastly, I stack these images together by simply adding them together and normalize the result.</p>
+</li>
+<li>
+<p><strong>Oraple.</strong></p>
+<!-- *TODO:* Include visualizations of the Oraple blending along any variations your tried (include both original images and the blended image) -->
+ <div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/apple.jpeg" width="40%">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/orange.jpeg" width="40%">
+ </div>
+ <div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/mask.png" width="40%">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/result.png" width="40%">
+ </div>
+</li>
+<li>
+<p><strong>Blends of your choice.</strong></p>
+<!-- *TODO:* Include visualizations of blends of your choice (include both original images and the blended image). Describe any modifications you made on top of what worked for the oraple. -->
+<div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/l.png" width="40%">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/r.png" width="40%">
+ </div>
+ <div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/m2.png" width="40%">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/blend/eye2.png" width="40%">
+ </div>
+ I attempted the famous eye on hand image blend. On top of the original oraple blend, I changed the depth of the image stack from 10 to 20 to get a visually pleasing result.</li>
+</ol>
+
+    </body>
+    </html>

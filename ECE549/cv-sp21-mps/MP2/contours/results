@@ -163,6 +163,7 @@ pts=25, sigma=3, nms-itp, cc=False
                       AP: 0.608640  
     runtime (in seconds): 1.429545
 
+/////// part3
 pts=25, sigma=4, nmscc=True
                threshold: 0.120000  
     overall max F1 score: 0.614045  

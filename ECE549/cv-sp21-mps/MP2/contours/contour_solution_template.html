@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Contour Detection</title>
+        <style>
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h2 id="contour-detection">Contour Detection</h2>
+<ol>
+<li>
+<p><strong>Method Description.</strong></p>
+<p>For part 2 of this question, I tried different boundary condition for the convolve function. Visually speaking, handling the boundary condition with <code>symm</code> gives the best result.</p>
+<p>For part 3 of this question, I tried 1-D gaussian filters with different width and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span></span></span></span> value. I also tried to first apply gaussian filter to the image, then apply derivative filter to the image. Base on the output matric, it seems that a wider gaussian filter with a <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span></span></span></span> about <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mn>6</mn></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{6}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.190108em;vertical-align:-0.345em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span> of the filter width gives better result. In particular, a 25-pixel wide gaussian filter with <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>σ</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\sigma=4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> gives me the highset overall F1 score.</p>
+<p>For part 4 of this question, I tired to perform 2-pixel interpolation first, then perform non-maximum suppression. I did not try bilinear interpolation, which in theory should give better result.</p>
+</li>
+<li>
+<p><strong>Precision Recall Plot.</strong></p>
+<!-- *TODO*: Use [contour_plot.py](contours/../contour_plot.py) to add curves for the different methods that you implemented into a single plot. -->
+<div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/plot.png" width="60%">
+</div>
+</li>
+<li>
+<p><strong>Results Table.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>overall max F-score</th>
+<th>average max F-score</th>
+<th>AP</th>
+<th>Runtime (seconds)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Initial implementation</td>
+<td>0.52</td>
+<td>0.56</td>
+<td>0.43</td>
+<td>0.0117</td>
+</tr>
+<tr>
+<td>Warm-up</td>
+<td>0.54</td>
+<td>0.57</td>
+<td>0.49</td>
+<td>0.0123</td>
+</tr>
+<tr>
+<td>Smoothing</td>
+<td>0.60</td>
+<td>0.63</td>
+<td>0.58</td>
+<td>0.0394</td>
+</tr>
+<tr>
+<td>Non-max suppression</td>
+<td>0.61</td>
+<td>0.64</td>
+<td>0.62</td>
+<td>1.4516</td>
+</tr>
+<tr>
+<td>Test set numbers of best model [From gradescope]</td>
+<td>0.61</td>
+<td>0.64</td>
+<td>0.62</td>
+<td>1.53</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Visualizations.</strong></p>
+<!-- *TODO:* Include visualization on 3 images (before and after the contour detection). Comment on
+your observations, where does your contour detector work well, where it doesn't and why? you can are also add visualizations of your own images. -->
+<div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/data/val/images/302008.jpg" width="35%" style="margin:10px;">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/output/norm/bench/302008.png" width="35%" style="margin:10px;">
+</div>
+<div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/data/val/images/253027.jpg" width="40%" style="margin:10px;">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/output/norm/bench/253027.png" width="40%" style="margin:10px;">
+</div>
+<div align="center">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/data/val/images/37073.jpg" width="40%" style="margin:10px;">
+   <img src="file:////Users/nickelliang/Documents/GitHub/Coursework/ECE_Courses/ECE549/cv-sp21-mps/MP2/contours/output/norm/bench/37073.png" width="40%" style="margin:10px;">
+</div>
+<p>From three set of images above, the edge detector works relatively well when the color contrast is high. When the contrast is realtively low, the gradient is smaller and hence the maximum value is lower, and the edge become dimmer in the image.</p>
+</li>
+</ol>
+<!-- 6. **Bells and Whistles.** *TODO*: Include details of the bells and whistles that you
+   tried here.
+
+   *TODO*: Present the performance metrics for the bells and whistles in a table format
+   
+   | Method | overall max F-score | average max F-score | AP | Runtime (seconds) |
+   | ----------- | --- | --- | ---  | --- |
+   | Best base Implementation (from above) | | | | 
+   | Bells and whistle (1) [extra credit]) | | | | 
+   | Bells and whistle (2) [extra credit]) | | | |
+   | Bells and whistle (n) [extra credit]) | | | | -->
+    </body>
+    </html>

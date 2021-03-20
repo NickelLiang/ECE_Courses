@@ -72,7 +72,17 @@ def compute_corners(I):
   #   pixel stores the score for being a corner. Non-max suppressed pixels
   #   should have a low / zero-score.
   
-  k, sigma, w, gtype = 0.05, 0.85, 3, 'conv'
+  
+  # k, sigma, w, gtype = 0.05, 1, 7, 'numpy'
+  # k, sigma, w, gtype = 0.05, 3, 15, 'numpy'
+  # k, sigma, w, gtype = 0.04, 1, 7, 'numpy'
+  # k, sigma, w, gtype = 0.06, 1, 7, 'numpy'
+  # k, sigma, w, gtype = 0.05, 0.85, 3, 'numpy'
+  # k, sigma, w, gtype = 0.05, 0.85, 3, 'sobel'
+  # k, sigma, w, gtype = 0.05, 0.85, 3, 'conv'
+  
+  # Best visualization with 37073
+  k, sigma, w, gtype = 0.05, 0.85, 7, 'conv'
 
   I = rgb_2_gray(I)
 
@@ -80,6 +90,7 @@ def compute_corners(I):
   response = normalize(response)
   response = np.clip(response, 0, 255)
 
+  # corners = response
   corners = threshold_nms(response, w)
   corners = np.clip(corners, 0, 255)
 
